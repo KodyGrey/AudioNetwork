@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+{% for post in posts %}
+
+<!-- Start: 1 Row 1 Column-->
+<div class="container" id="infinite-list"
+     style="border: 1px solid var(--bs-secondary); background: rgb(50, 57, 60);">
+    <!-- There would be posts -->
+</div><!-- End: 1 Row 1 Column -->
+<script>{{url_for('static', filename='js/infinite_list.js')}}</script>
+{% endfor %}
+{% endblock %}
