@@ -1,16 +1,17 @@
-var listElm = document.querySelector('#infinite-list');
 
 // Add audio items.
 
 fetch('http://localhost:5000/api/feed/0/0').then(
     resp => resp.json()
 ).then(function (data) {
+    var listElm = document.querySelector('#infinite-list');
+
     var nextItem = data.id
     var loadMore = function () {
         if (nextItem < 1) {
             return null;
         }
-        fetch(`http://localhost:5000/api/feed/${nextItem.toString()}/5`
+        fetch(`http://localhost:5000/api/feed/${nextItem.toString()}/10`
         ).then(
             resp => resp.json()
         ).then(function (posts) {

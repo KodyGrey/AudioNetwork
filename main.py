@@ -1,5 +1,4 @@
 import datetime
-
 from flask import Flask, url_for, redirect, render_template, request, abort
 from data import db_session, posts_resource
 from data.users import Users
@@ -131,6 +130,8 @@ def new_post():
             num = 0
         num = str(int(num) + 1)
         post.audio_file = num
+        post.author = current_user.id
+        post.creation_date = datetime.datetime.now()
 
         f.save(os.path.join('C:\\Projects\\AudioNetwork', 'static', 'audio', 'mp3',
                             num + '.mp3'))
@@ -144,5 +145,7 @@ def new_post():
 if __name__ == '__main__':
     api.add_resource(posts_resource.PostsListResourceForInfiniteScrolling,
                      '/api/feed/<int:start>/<int:amount>')
+    api.add_resource(posts_resource.PostsResource, '/api/posts/<int:id>')
+    api.add_resource(posts_resource.PostsListResource, '/api/posts')
 
     app.run(port=5000, host='127.0.0.1')
