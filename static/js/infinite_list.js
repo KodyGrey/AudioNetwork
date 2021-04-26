@@ -1,24 +1,30 @@
+var listElm = document.querySelector('#infinite-list');
 
-// Add audio items.
 
+var nextItem;
+var amount = 10;
 fetch('http://localhost:5000/api/feed/0/0').then(
     resp => resp.json()
 ).then(function (data) {
-    var listElm = document.querySelector('#infinite-list');
+    nextItem = data.id + amount;
 
-    var nextItem = data.id
-    var loadMore = function () {
+    // Initially load some items.
+    loadMore();
+}).catch(error => console.log(error));
+// Add audio items.
+var loadMore = function () {
+        nextItem -= amount;
+        console.log(nextItem);
         if (nextItem < 1) {
             return null;
         }
-        fetch(`http://localhost:5000/api/feed/${nextItem.toString()}/10`
+        fetch(`http://localhost:5000/api/feed/${nextItem.toString()}/${amount.toString()}`
         ).then(
             resp => resp.json()
         ).then(function (posts) {
-            console.log(posts)
             for (var i in posts.posts) {
                 var post = posts.posts[i];
-                console.log(post)
+                // console.log(post)
                 var html = `<div class=\"row\">\n` +
                     `        <div class=\"col-md-12 col-xl-8 offset-xl-2\" style=\"text-align: center;\">\n` +
                     `            <h6 style=\"margin: 10px;color: rgb(255,255,255);\">${post.title}</h6>\n` +
@@ -33,13 +39,12 @@ fetch('http://localhost:5000/api/feed/0/0').then(
         }).catch(error => console.log(error));
     }
 
-
-    // Detect when scrolled to bottom.
-    listElm.addEventListener('scroll', function () {
-        if (listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
-            loadMore();
-        }
-    });
-    // Initially load some items.
+// Detect when scrolled to bottom.
+var scrollHeight = $(document).height();
+var scrollPos = $(window).height() + $(window).scrollTop();
+$(window).on("scroll", function() {
+  var scrollHeight = $(document).height();
+  var scrollPos = $(window).height() + $(window).scrollTop();
+  if ((scrollHeight - scrollPos) / scrollHeight == 0) {
     loadMore();
-}).catch(error => console.log(error));
+}});

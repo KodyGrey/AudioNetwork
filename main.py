@@ -1,6 +1,6 @@
 import datetime
 from flask import Flask, url_for, redirect, render_template, request, abort
-from data import db_session, posts_resource
+from data import db_session, posts_resource, users_resources
 from data.users import Users
 from data.posts import Posts
 from flask_wtf import FlaskForm
@@ -147,5 +147,7 @@ if __name__ == '__main__':
                      '/api/feed/<int:start>/<int:amount>')
     api.add_resource(posts_resource.PostsResource, '/api/posts/<int:id>')
     api.add_resource(posts_resource.PostsListResource, '/api/posts')
+    api.add_resource(users_resources.UsersResource, '/api/users/<int:id>')
+    api.add_resource(users_resources.UsersListResources, '/api/users')
 
     app.run(port=5000, host='127.0.0.1')

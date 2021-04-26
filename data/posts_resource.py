@@ -37,6 +37,7 @@ class PostsResource(Resource):
 
 class PostsListResource(Resource):
 
+    @cross_origin()
     def get(self):
         sess = create_session()
         posts = sess.query(Posts).all()
