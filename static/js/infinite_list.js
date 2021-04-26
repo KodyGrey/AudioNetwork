@@ -25,7 +25,7 @@ var loadMore = function () {
             for (var i in posts.posts) {
                 var post = posts.posts[i];
                 // console.log(post)
-                var html = `<div class=\"row\">\n` +
+                var html = `<div class=\"row\" style="border: 1px solid var(--bs-secondary); background: rgb(50, 57, 60); margin-bottom: 20px;">\n` +
                     `        <div class=\"col-md-12 col-xl-8 offset-xl-2\" style=\"text-align: center;\">\n` +
                     `            <h6 style=\"margin: 10px;color: rgb(255,255,255);\">${post.title}</h6>\n` +
                     `            <audio controls=\"\" style=\"margin: 10px;width: 80%;\">\n` +
